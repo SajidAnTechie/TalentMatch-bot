@@ -1,5 +1,5 @@
-const { isValidHttpUrl } = require('../../utils/url');
-const { formatDateToDayMonthDate, convertTo12HourFormat } = require('../../utils/date');
+const { isValidHttpUrl } = require('../utils/url');
+const { formatDateToDayMonthDate, convertTo12HourFormat } = require('../utils/date');
 
 const requestCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
     const data = view.state.values;

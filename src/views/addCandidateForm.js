@@ -1,4 +1,4 @@
-const { isValidHttpUrl } = require('../../utils/url');
+const { isValidHttpUrl } = require('../utils/url');
 
 const addCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
     const data = view.state.values;

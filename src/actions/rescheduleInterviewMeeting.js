@@ -1,4 +1,4 @@
-const { getCurrentDateAndTime } = require("../../utils/date");
+const { getCurrentDateAndTime } = require("../utils/date");
 
 const handleRescheduleInterviewMeeting = (app) => async ({ ack, context, logger, body }) => {
     ack();

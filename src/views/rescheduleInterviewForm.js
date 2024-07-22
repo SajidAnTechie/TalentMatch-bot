@@ -1,4 +1,4 @@
-const { formatDateToDayMonthDate, convertTo12HourFormat } = require('../../utils/date');
+const { formatDateToDayMonthDate, convertTo12HourFormat } = require('../utils/date');
 
 const rescheduleInterviewFormSubmission = (app) => async ({ ack, view, payload, body }) => {
     ack();
