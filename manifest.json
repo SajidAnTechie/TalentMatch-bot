@@ -1,0 +1,57 @@
+{
+    "display_information": {
+        "name": "TalentMatch",
+        "description": "TalentMatch Bot identifies and notifies you of candidates with the right skills for your projects, ensuring quick readiness for interviews.",
+        "background_color": "#2e7d32",
+        "long_description": "TalentMatch Bot is designed to identify and notify team members about candidates who possess the specific skills required for your projects. It streamlines the candidate matching process, ensuring you have the right talent ready for interviews efficiently and effectively."
+    },
+    "features": {
+        "app_home": {
+            "home_tab_enabled": true,
+            "messages_tab_enabled": true,
+            "messages_tab_read_only_enabled": false
+        },
+        "bot_user": {
+            "display_name": "TalentMatch",
+            "always_online": true
+        },
+        "slash_commands": [
+            {
+                "command": "/candidate",
+                "url": "https://184a-182-93-83-51.ngrok-free.app/slack/events",
+                "description": "Candidate Selection for a project",
+                "usage_hint": "[can, inter]",
+                "should_escape": false
+            }
+        ]
+    },
+    "oauth_config": {
+        "scopes": {
+            "bot": [
+                "chat:write",
+                "chat:write.public",
+                "commands",
+                "users:read",
+                "groups:read",
+                "groups:write",
+                "mpim:history",
+                "groups:write.invites"
+            ]
+        }
+    },
+    "settings": {
+        "event_subscriptions": {
+            "request_url": "https://184a-182-93-83-51.ngrok-free.app/slack/events",
+            "bot_events": [
+                "app_home_opened"
+            ]
+        },
+        "interactivity": {
+            "is_enabled": true,
+            "request_url": "https://184a-182-93-83-51.ngrok-free.app/slack/events"
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": false,
+        "token_rotation_enabled": false
+    }
+}
