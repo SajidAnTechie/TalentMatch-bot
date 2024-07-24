@@ -1,10 +1,11 @@
 const app = require('../app');
-const addCandidateFormSubmission = require('./addCandidateForm');
-const requestCandidateFormSubmission = require('./requestCandidateForm');
-const rescheduleInterviewFormSubmission = require('./rescheduleInterviewForm');
-const updateCandidateFormSubmission = require('./updateCandidateForm');
+const { viewCallBackIds } = require('../constants/common');
+const addCandidateFormSubmission = require('./addCandidateFormSubmission');
+const updateCandidateFormSubmission = require('./updateCandidateInfoFormSubmission');
+const rescheduleInterviewFormSubmission = require('./rescheduleInterviewFormSubmission');
+const candidateInterviewRequestFormSubmission = require('./candidateInterviewRequestFormSubmission');
 
-app.view('add_candidate_form_submission', addCandidateFormSubmission(app));
-app.view('update_candidate_form_submission', updateCandidateFormSubmission(app));
-app.view('request_candidate_form_submission', requestCandidateFormSubmission(app));
-app.view('reschedule_interview_form_submission', rescheduleInterviewFormSubmission(app));
+app.view(viewCallBackIds.ADD_CANDIDATE_FORM_SUBMISSION, addCandidateFormSubmission(app));
+app.view(viewCallBackIds.UPDATE_CANDIDATE_INFO_FORM_SUBMISSION, updateCandidateFormSubmission(app));
+app.view(viewCallBackIds.REQUEST_INTERVIEWER_FOR_INTERVIEW_FORM_SUBMISSION, candidateInterviewRequestFormSubmission(app));
+app.view(viewCallBackIds.RESCHEDULE_INTERVIEW_FORM_SUBMISSION, rescheduleInterviewFormSubmission(app));

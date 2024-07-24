@@ -1,12 +1,17 @@
 const { isValidHttpUrl } = require('../utils/url');
+const { actionCallBackIds } = require('../constants/common')
 
-const addCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
+const updateCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
     const data = view.state.values;
 
     const candidateName =
         data.candidate_name_block_id.candidate_name_input_action.value;
     const recruiteeUrl =
         data.recruitee_url_block_id.recruitee_url_input_action.value;
+
+    const metaData = payload.private_metadata.split("-");
+    const channelId = metaData[0];
+    const messageTS = metaData[1];
 
     if (!isValidHttpUrl(recruiteeUrl)) {
         await ack({
@@ -23,8 +28,9 @@ const addCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
     const message = `:wave: Hey, <!channel> \n\nFound a candidate :star2: <${recruiteeUrl}|*${candidateName}*> :white_check_mark: who is ready for an interview.`;
 
     try {
-        await app.client.chat.postMessage({
-            channel: payload.private_metadata,
+        await app.client.chat.update({
+            channel: channelId,
+            ts: messageTS,
             text: message,
             mrkdwn: true,
             metadata: {
@@ -56,37 +62,37 @@ const addCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
                             },
                             style: "primary",
                             value: "edit",
-                            action_id: "update_candidate",
+                            action_id: actionCallBackIds.UPDATE_CANDIDATE_INFO,
                         },
                         {
                             type: "button",
                             text: {
                                 type: "plain_text",
                                 emoji: true,
-                                text: "Request",
+                                text: "Request for interview",
                             },
                             style: "primary",
                             value: "request",
-                            action_id: "candidate_request",
+                            action_id: actionCallBackIds.REQUEST_INTERVIEWER_FOR_INTERVIEW,
                         },
                         {
                             type: "button",
                             text: {
                                 type: "plain_text",
                                 emoji: true,
-                                text: "Schedule",
+                                text: "Schedule interview",
                             },
                             style: "primary",
                             value: "reschedule",
-                            action_id: "reschedule_interview_meeting",
+                            action_id: actionCallBackIds.RESCHEDULE_INTERVIEW_MEETING,
                         },
                     ],
                 },
             ],
         });
     } catch (error) {
-        console.error(error);
+        logger.error(error);
     }
 }
 
-module.exports = addCandidateFormSubmission;
+module.exports = updateCandidateFormSubmission

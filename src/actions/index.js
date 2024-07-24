@@ -1,8 +1,9 @@
 const app = require("../app");
-const handleUpdateCandidate = require("./updateCadidate");
-const handleCandidateRequest = require("./candidateRequest");
+const { actionCallBackIds } = require('../constants/common');
+const handleUpdateCandidateInfo = require("./updateCandidateInfo");
+const handleInterviewRequest = require("./candidateInterviewRequest");
 const handleRescheduleInterviewMeeting = require("./rescheduleInterviewMeeting");
 
-app.action('update_candidate', handleUpdateCandidate(app));
-app.action('candidate_request', handleCandidateRequest(app));
-app.action('reschedule_interview_meeting', handleRescheduleInterviewMeeting(app));
+app.action(actionCallBackIds.UPDATE_CANDIDATE_INFO, handleUpdateCandidateInfo(app));
+app.action(actionCallBackIds.REQUEST_INTERVIEWER_FOR_INTERVIEW, handleInterviewRequest(app));
+app.action(actionCallBackIds.RESCHEDULE_INTERVIEW_MEETING, handleRescheduleInterviewMeeting(app));

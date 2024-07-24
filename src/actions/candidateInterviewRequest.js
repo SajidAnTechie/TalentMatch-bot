@@ -1,6 +1,7 @@
 const { getCurrentDateAndTime } = require("../utils/date");
+const { viewCallBackIds } = require('../constants/common');
 
-const handleCandidateRequest = (app) => async ({ ack, context, logger, body }) => {
+const handleInterviewRequest = (app) => async ({ ack, context, logger, body }) => {
     ack();
 
     try {
@@ -8,7 +9,7 @@ const handleCandidateRequest = (app) => async ({ ack, context, logger, body }) =
             user: body.user.id,
         });
         const clientTimeZone = result.user.tz;
-        const { date, time } = getCurrentDateAndTime(clientTimeZone);
+        const { date } = getCurrentDateAndTime(clientTimeZone);
         const {
             event_payload: { candidateDetails },
         } = body.message.metadata;
@@ -23,7 +24,7 @@ const handleCandidateRequest = (app) => async ({ ack, context, logger, body }) =
                     type: "plain_text",
                     text: "Request candidate",
                 },
-                callback_id: "request_candidate_form_submission",
+                callback_id: viewCallBackIds.REQUEST_INTERVIEWER_FOR_INTERVIEW_FORM_SUBMISSION,
                 private_metadata: body.channel.id,
                 blocks: [
                     {
@@ -108,7 +109,6 @@ const handleCandidateRequest = (app) => async ({ ack, context, logger, body }) =
                         block_id: "interview_time_block_id",
                         element: {
                             type: "timepicker",
-                            initial_time: time,
                             placeholder: {
                                 type: "plain_text",
                                 text: "Select time",
@@ -135,4 +135,4 @@ const handleCandidateRequest = (app) => async ({ ack, context, logger, body }) =
     }
 }
 
-module.exports = handleCandidateRequest;
+module.exports = handleInterviewRequest;

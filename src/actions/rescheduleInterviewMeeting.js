@@ -1,4 +1,5 @@
 const { getCurrentDateAndTime } = require("../utils/date");
+const { viewCallBackIds } = require('../constants/common');
 
 const handleRescheduleInterviewMeeting = (app) => async ({ ack, context, logger, body }) => {
     ack();
@@ -8,7 +9,7 @@ const handleRescheduleInterviewMeeting = (app) => async ({ ack, context, logger,
             user: body.user.id,
         });
         const clientTimeZone = result.user.tz;
-        const { date, time } = getCurrentDateAndTime(clientTimeZone);
+        const { date } = getCurrentDateAndTime(clientTimeZone);
 
         await app.client.views.open({
             token: context.botToken,
@@ -19,7 +20,7 @@ const handleRescheduleInterviewMeeting = (app) => async ({ ack, context, logger,
                     type: "plain_text",
                     text: "Request candidate",
                 },
-                callback_id: "reschedule_interview_form_submission",
+                callback_id: viewCallBackIds.RESCHEDULE_INTERVIEW_FORM_SUBMISSION,
                 private_metadata: body.channel.id,
                 blocks: [
                     {
@@ -46,7 +47,6 @@ const handleRescheduleInterviewMeeting = (app) => async ({ ack, context, logger,
                         block_id: "interview_time_block_id",
                         element: {
                             type: "timepicker",
-                            initial_time: time,
                             placeholder: {
                                 type: "plain_text",
                                 text: "Select time",

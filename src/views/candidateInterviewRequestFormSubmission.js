@@ -1,7 +1,7 @@
 const { isValidHttpUrl } = require('../utils/url');
 const { formatDateToDayMonthDate, convertTo12HourFormat } = require('../utils/date');
 
-const requestCandidateFormSubmission = (app) => async ({ ack, view, payload }) => {
+const candidateInterviewRequestFormSubmission = (app) => async ({ ack, view, payload }) => {
     const data = view.state.values;
 
     const candidateName =
@@ -27,8 +27,8 @@ const requestCandidateFormSubmission = (app) => async ({ ack, view, payload }) =
         ack();
     }
 
-    const formatedDate = formatDateToDayMonthDate(date);
-    const formagtedTime = convertTo12HourFormat(time);
+    const formattedDate = formatDateToDayMonthDate(date);
+    const formattedTime = convertTo12HourFormat(time);
 
     let usersToMention = "";
 
@@ -40,7 +40,7 @@ const requestCandidateFormSubmission = (app) => async ({ ack, view, payload }) =
         `:wave: Hey, <!channel> \n\nRequesting ` +
         usersToMention +
         " " +
-        `:bust_in_silhouette: to interview \n\n<${recruiteeUrl}|*${candidateName}*> at ${formagtedTime} on ${formatedDate}`;
+        `:bust_in_silhouette: to interview \n\n<${recruiteeUrl}|*${candidateName}*> at ${formattedTime} on ${formattedDate}`;
 
     try {
         await app.client.chat.postMessage({
@@ -53,4 +53,4 @@ const requestCandidateFormSubmission = (app) => async ({ ack, view, payload }) =
     }
 }
 
-module.exports = requestCandidateFormSubmission
+module.exports = candidateInterviewRequestFormSubmission

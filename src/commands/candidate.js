@@ -1,3 +1,5 @@
+const { viewCallBackIds } = require('../constants/common')
+
 const handleCandidateCommand = (app) => async ({ ack, payload, context, logger }) => {
     ack();
 
@@ -11,7 +13,7 @@ const handleCandidateCommand = (app) => async ({ ack, payload, context, logger }
                     type: "plain_text",
                     text: "Add candidate",
                 },
-                callback_id: "add_candidate_form_submission",
+                callback_id: viewCallBackIds.ADD_CANDIDATE_FORM_SUBMISSION,
                 private_metadata: payload.channel_id,
                 blocks: [
                     {

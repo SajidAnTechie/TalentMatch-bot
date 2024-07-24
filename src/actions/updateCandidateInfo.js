@@ -1,4 +1,6 @@
-const handleUpdateCandidate = (app) => async ({ ack, context, logger, body }) => {
+const { viewCallBackIds } = require('../constants/common');
+
+const handleUpdateCandidateInfo = (app) => async ({ ack, context, logger, body }) => {
     ack();
 
     const {
@@ -16,7 +18,7 @@ const handleUpdateCandidate = (app) => async ({ ack, context, logger, body }) =>
                     type: "plain_text",
                     text: "Update candidate",
                 },
-                callback_id: "update_candidate_form_submission",
+                callback_id: viewCallBackIds.UPDATE_CANDIDATE_INFO_FORM_SUBMISSION,
                 private_metadata: `${body.channel.id}-${body.message.ts}`,
                 blocks: [
                     {
@@ -67,4 +69,4 @@ const handleUpdateCandidate = (app) => async ({ ack, context, logger, body }) =>
     }
 }
 
-module.exports = handleUpdateCandidate
+module.exports = handleUpdateCandidateInfo
