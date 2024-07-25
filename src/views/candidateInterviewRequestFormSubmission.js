@@ -1,56 +1,61 @@
-const { isValidHttpUrl } = require('../utils/url');
-const { formatDateToDayMonthDate, convertTo12HourFormat } = require('../utils/date');
+const { isValidHttpUrl } = require("../utils/url");
+const {
+    formatDateToDayMonthDate,
+    convertTo12HourFormat,
+} = require("../utils/date");
 
-const candidateInterviewRequestFormSubmission = (app) => async ({ ack, view, payload }) => {
-    const data = view.state.values;
+const candidateInterviewRequestFormSubmission =
+    (app) =>
+        async ({ ack, view, payload }) => {
+            const data = view.state.values;
 
-    const candidateName =
-        data.candidate_name_block_id.candidate_name_input_action.value;
-    const recruiteeUrl =
-        data.recruitee_url_block_id.recruitee_url_input_action.value;
-    const assignees =
-        data.assignee_select_block_id.assignee_select_input_action.selected_users;
-    const date =
-        data.interview_date_block_id.interview_date_input_action.selected_date;
-    const time =
-        data.interview_time_block_id.interview_time_input_action.selected_time;
+            const candidateName =
+                data.candidate_name_block_id.candidate_name_input_action.value;
+            const recruiteeUrl =
+                data.recruitee_url_block_id.recruitee_url_input_action.value;
+            const assignees =
+                data.assignee_select_block_id.assignee_select_input_action.selected_users;
+            const date =
+                data.interview_date_block_id.interview_date_input_action.selected_date;
+            const time =
+                data.interview_time_block_id.interview_time_input_action.selected_time;
 
-    if (!isValidHttpUrl(recruiteeUrl)) {
-        await ack({
-            response_action: "errors",
-            errors: {
-                recruitee_url_block_id: "Please provide a valid url.",
-            },
-        });
-        return;
-    } else {
-        ack();
-    }
+            if (!isValidHttpUrl(recruiteeUrl)) {
+                await ack({
+                    response_action: "errors",
+                    errors: {
+                        recruitee_url_block_id: "Please provide a valid url.",
+                    },
+                });
+                return;
+            } else {
+                ack();
+            }
 
-    const formattedDate = formatDateToDayMonthDate(date);
-    const formattedTime = convertTo12HourFormat(time);
+            const formattedDate = formatDateToDayMonthDate(date);
+            const formattedTime = convertTo12HourFormat(time);
 
-    let usersToMention = "";
+            let usersToMention = "";
 
-    assignees.forEach((userId) => {
-        usersToMention += `<@${userId}> `;
-    });
+            assignees.forEach((userId) => {
+                usersToMention += `<@${userId}> `;
+            });
 
-    const message =
-        `:wave: Hey, <!channel> \n\nRequesting ` +
-        usersToMention +
-        " " +
-        `:bust_in_silhouette: to interview \n\n<${recruiteeUrl}|*${candidateName}*> at ${formattedTime} on ${formattedDate}`;
+            const message =
+                `:wave: Hey, <!channel> \n\nRequesting ` +
+                usersToMention +
+                " " +
+                `:bust_in_silhouette: to interview \n\n<${recruiteeUrl}|*${candidateName}*> at ${formattedTime} on ${formattedDate}`;
 
-    try {
-        await app.client.chat.postMessage({
-            channel: payload.private_metadata,
-            text: message,
-            mrkdwn: true,
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
+            try {
+                await app.client.chat.postMessage({
+                    channel: payload.private_metadata,
+                    text: message,
+                    mrkdwn: true,
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-module.exports = candidateInterviewRequestFormSubmission
+module.exports = candidateInterviewRequestFormSubmission;

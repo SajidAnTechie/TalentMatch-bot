@@ -11,5 +11,5 @@ function isValidHttpUrl(string) {
 }
 
 module.exports = {
-    isValidHttpUrl
-}
+    isValidHttpUrl,
+};

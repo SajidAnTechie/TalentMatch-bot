@@ -70,5 +70,5 @@ function convertTo12HourFormat(time24) {
 module.exports = {
     getCurrentDateAndTime,
     formatDateToDayMonthDate,
-    convertTo12HourFormat
-}
+    convertTo12HourFormat,
+};
